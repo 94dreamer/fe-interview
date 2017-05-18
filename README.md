@@ -1,12 +1,14 @@
-笔试：
+## 笔试：
 
 1. 写出下列代码的输出。
+
+```
 undefined == null;	//true					1 == true; //true
 2 == true;		//	false					0 == false; //true
 0 == '';			// true					NaN == NaN; //false
 [] == false;		//	true					[] == ![]; //true
 var a={};a>=0;	//false					null>0;//false
-
+```
 扩展：[]>=0 
 
 2. 手写一个原生Ajax或者描述一下过程。
@@ -63,7 +65,7 @@ body.appendChild(scr);
 
 扩展：层级过多，有什么不好？
 
-面试：
+## 面试：
 
 1. 自我介绍，并介绍自己的项目
 2. 谈一谈你在项目中如何组织自己的代码，团队的代码规范应该要有什么？
