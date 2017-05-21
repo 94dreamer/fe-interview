@@ -6,7 +6,7 @@
 undefined == null;	//true					1 == true; //true
 2 == true;		//	false					0 == false; //true
 0 == '';			// true					NaN == NaN; //false
-[] == false;		//	true					[] == ![]; //true
+[] == false;		//	true					[] == ![]; //false
 var a={};a>=0;	//false					null>0;//false
 ```
 扩展：[]>=0 
@@ -78,6 +78,6 @@ body.appendChild(scr);
 9. 移动端适配怎么做？
 10. 跨域方法有哪些？
 11. 前端路由如何控制？
-12. 请解释什么是事件代理？
+12. 请解释什么是事件代理／事件委托？
 13. Web储存方法有哪些？简单区别下。
 14. 如何在代码中判断自身是否被压缩。（提示function的name属性）。
