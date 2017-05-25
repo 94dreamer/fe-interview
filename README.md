@@ -14,7 +14,9 @@
 
 - #### [DOM/浏览器](./dom) 
 
-- #### [算法](./algorithm)
+- #### [算法编程](./algorithm)
+
+- #### [JQuery](./jquery)
 
 - #### [React](./react)
 

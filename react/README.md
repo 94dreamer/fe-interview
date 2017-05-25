@@ -204,7 +204,11 @@ class UsersList extends Component {
     handleClick=()=>{
       dispatch({
         type:'ADD_USER',
-        value:
+        user:{
+        	username: 'Tomy',
+		  	age: 12,
+		  	gender: 'male'
+        }
       })
     }
     
@@ -227,7 +231,15 @@ class UsersList extends Component {
   }
 }
 
-export connect(stateMapToProps,dispatchMapToProps)(UsersList);
+const mapStateToProps=(state)=>{
+
+};
+
+const mapDispatchToProps =(dispatch)=>{
+
+};
+
+export connect(mapStateToProps,mapDispatchToProps)(UsersList);
 ```
 
 
