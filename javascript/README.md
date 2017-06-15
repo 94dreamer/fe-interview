@@ -92,3 +92,30 @@ const extname = (filename) => {
   return filename.match(reg)?filename.match(reg)[1]:'';
 }
 ```
+
+- 说说严格模式的限制
+
+```
+不能使用with扩展作用域
+变量必须声明后再使用
+不能使用arguments.callee 和 caller
+禁用this指向全局
+不能使用前缀0表示八进制数，否则报错
+不能删除不可删除的属性，否则报错
+```
+
+- 设立”严格模式”的目的，主要有以下几个：
+
+```
+消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;
+消除代码运行的一些不安全之处，保证代码运行的安全；
+提高编译器效率，增加运行速度；
+为未来新版本的Javascript做好铺垫
+```
+
+- 说说你对AMD和Commonjs的理解
+
+```
+CommonJS是服务器端模块的规范，Node.js采用了这个规范。CommonJS规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。AMD规范则是非同步加载模块，允许指定回调函数。
+AMD推荐的风格通过返回一个对象做为模块对象，CommonJS的风格通过对module.exports或exports的属性赋值来达到暴露模块对象的目的。
+```
