@@ -15,6 +15,17 @@ var a={};a>=0;	//false					null>0;//false
 
 2. 手写一个原生Ajax或者描述一下过程。
 
+```
+var xhr=new XMLHttpRequest();
+xhr.onreadystatechange=function(){
+   if(xhr.readtState==4 && xhr.status==200){
+        console.log(xhr.responseText);
+   }
+}
+xhr.open('GET','index.php',true);
+xhr.send();
+```
+
 扩展：fetch了解过吗，相对于ajax有什么优势？
 
 3. 手写或者描述一个排序算法（冒泡or快速）。

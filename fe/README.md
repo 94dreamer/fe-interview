@@ -49,8 +49,12 @@
 
 ### 模块化
 
+了解前端模块化概念和常用模块化规范，如AMD，CMD，CommonJS等
+
+```
+
+```
 <del>
-了解前端模块化概念和常用模块化规范，如AMD，CMD，CommonJS等 <br/>
 了解客户端模块化工具，如RequireJS和SeaJS等，并能够熟练使用 <br/>
 了解构建模块化工具，如Webpack等，并能够熟练使用 <br/>
 了解CSS模块化概念和实现方法，并能够熟练使用 <br/>
@@ -66,6 +70,15 @@
 </del>
 
 - 了解跨域概念和常用跨域实现方法，熟练使用跨域技术进行开发
+
+```
+1. JSONP  （利用有src属性标签的跨域能力，动态的生成并插入script来获取服务端传来的回调函数中的数据。）
+2. CORS（服务器端对于CORS的支持，主要就是通过设置Access-Control-Allow-Origin来进行的。如果浏览器检测到相应的设置，就可以允许Ajax进行跨域的访问。）
+3. 通过修改document.domain来跨子域 （）
+4. 使用window.name来进行跨域   ();
+5.使用HTML5中新引进的window.postMessage方法来跨域传送数据
+
+```
 
 - 了解RESTful概念，能够熟练使用工具与RESTful API进行交互
 

@@ -25,9 +25,56 @@ function bubbleSort(arr) {
 - 快速排序
 
 ```
-
+function quickSort(arr) {
+  if(arr.length==0){
+    return [];
+  }
+  let arrMin=[];
+  let arrMax=[];
+  let pointer=arr[0];
+  for(let i=1;i<arr.length;i++){
+    if(arr[i]<arr[0]){
+      arrMin.push(arr[i]);
+    }else{
+      arrMax.push(arr[i]);
+    }
+  }
+  return quickSort(arrMin).concat(pointer,arrMax);//递归
+}
 ```
 
+- 洗牌算法
+
+```
+function outOrder(arr){
+    var len=arr.length;
+    for(var i=0;i<len-1;i++){//次数
+        var index=Math.floor(Math.random()*(len));
+        var temp=arr[index];
+        arr[index]=arr[len-i-1]
+        arr[len-i-1]=temp;
+    }
+    return arr;
+}
+```
+
+- 数组去重
+
+```
+function unique(arr){
+    var obj={};
+    var newArr=[];
+    for(let i=0;i<arr.length;i++){
+        if(arr[i] in obj){
+           break;
+        }else{
+           obj[arr[i]]=1;
+           newArr.push(arr[i]);
+        }
+    }
+    return newArr;
+}
+```
 
 - 编写一个方法 求一个字符串的字节长度
 
