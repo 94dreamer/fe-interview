@@ -1,5 +1,14 @@
 ## JavaScript
 
+- apply 和 call 什么含义，什么区别？什么时候用。
+
+```
+apply和call都是盗用对象的方法，以另外一个对象替换它。
+不同的是
+apply 传参是这样的 obj.func.apply(obj,[ar1,ar2,ar3]); 接受一个数组作为第二个参数
+call 传参是这样的 obj.func.call(obj,ar1,ar2,ar3);
+```
+
 - 闭包
 
 - 说说对作用域链的理解
@@ -23,6 +32,12 @@
 - 异步加载JS的方式有哪些？
 
 - js延迟加载的方式有哪些？
+
+```
+defer async属性
+按需异步加载，动态创建script插入DOM
+
+```
 
 - 那些操作会造成内存泄漏？
 
