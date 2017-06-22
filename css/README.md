@@ -108,3 +108,12 @@
 postcss可以对sass处理过后的css再处理 最常见的就是autoprefixer
 ```
 
+- position的几种属性
+
+```
+absolute
+relative
+fixed 固定定位
+static 没有定位
+inherit 继承父级
+```

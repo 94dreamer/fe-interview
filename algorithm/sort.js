@@ -29,7 +29,7 @@ function quickSort(arr) {
       arrMax.push(arr[i]);
     }
   }
-  return quickSort(arrMin).concat(pointer,arrMax);//递归
+  return quickSort(arrMin).concat(pointer,quickSort(arrMax));//递归
 }
 
 
@@ -41,3 +41,34 @@ var Arr=quickSort(arr);
 
 
 console.log(Arr);
+
+
+function qSort(arr) {
+  var len=arr.length;
+  if(len<2){
+    return arr
+  }
+  var pointer=arr[0];
+  var left=[];
+  var right=[];
+  for(var i=0;i<arr.length;i++){
+    if(arr[i]<pointer){
+      left.push(arr[i])
+    }else{
+      right.push(arr[i])
+    }
+  }
+  return qSort(left).concat(pointer,qSort(right));
+}
+
+function bubbleSort(arr) {
+  var len=arr.length;
+  for(var i=0;i<len-1;i++){
+    for(var j=0;j<len-i-i;j++){
+      if(arr[j]>arr[j+1]){
+        [arr[j],arr[j+1]]=[arr[j+1],arr[j]];
+      }
+    }
+  }
+  return arr
+}

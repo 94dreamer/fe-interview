@@ -9,10 +9,6 @@ apply 传参是这样的 obj.func.apply(obj,[ar1,ar2,ar3]); 接受一个数组�
 call 传参是这样的 obj.func.call(obj,ar1,ar2,ar3);
 ```
 
-- 闭包
-
-- 说说对作用域链的理解
-
 - JavaScript原型，原型链 ? 有什么特点？
 
 - 请解释什么是事件代理
@@ -20,6 +16,8 @@ call 传参是这样的 obj.func.call(obj,ar1,ar2,ar3);
 - Javascript如何实现继承？
 
 - 谈谈This对象的理解
+
+
 
 - 事件模型
 
