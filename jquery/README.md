@@ -2,14 +2,11 @@
 
 - 你觉得jQuery或zepto源码有哪些写的好的地方
 
-
 	jquery源码封装在一个匿名函数的自执行环境中，有助于防止变量的全局污染，然后通过传入window对象作为局部变量使用，好处是当jQuery中访问window对象的时候，就不用重复查找作用域链，可以更快访问window对象。  
 	jquery将一些原型属性和方法封装在了jquery.prototype中，为了缩短名称，又赋值给了jquery.fn。  
 	jquery实现的链式调用可以节约代码，所返回的都是同一个对象，可以提高代码效率。
 
 - jQuery 的实现原理？
-
-	
 
 - jQuery.fn 的 init 方法返回的 this 指的是什么对象？ 为什么要返回 this？
 
