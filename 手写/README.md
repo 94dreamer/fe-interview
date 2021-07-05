@@ -279,15 +279,121 @@ jsonp('',{a:1}, 'jsonp00001').then(data=>{})
 ```
 
 ### Ajax 
-```
+> 监听 兼容
+```js
+const getJSON = function(url){
+    return new Promise((resolve,reject)=>{
+        const xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Mscrosoft.XMLHttp');
+        xhr.open('GET',url,false);
+        xhr.setRequestHeader('Accept','application/json');
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState!== this.DONE )return;
+            if(xhr.status===20 || xh.status===304){
+                resolve(xhr.responseText)
+            }else{
+                reject(new Error(xhr.responseText))
+            }
+        }
+        xhr.send();
+    })
+}
 ```
 
 ### Promise
+> then考虑链式调用，所以得返回一个新的primise
+> 处理异步问题，所以的先用callback先存起来
 ```js
+const PENDING = 'pending';
+const FULFILLED = 'fulfilled';
+const REJECTED = 'rejected';
 
+class Promise{
+   constructor(executor){
+       this.status = PENDING;
+       this.value = undefined;
+       this.reason = undefined;
+       this.onResolvedCallbacks=[];
+       this.onRejectCallbacks=[];
+
+       let resolve=(value)=>{
+           if(this.status===PENDING){
+               this.status = FULFILLED;
+               this.value = value;
+               this.onResolvedCallbacks.forEach(fn=>fn());
+           }
+       }
+
+       let reject=(reason)=>{
+           if(this.status === PENDING){
+               this.status = REJECTED;
+               this.reason = reason;
+               this.onRejectedCallbacks.forEach(fn=>fn())
+           }
+       }
+
+        try{
+            executor(resolve,reject)
+        }catch(error){
+            reject(error);
+        }
+   }
+
+   then(onFulfilled,rejectCB){
+       // 每次调用then都返回一个新的promise
+       let promise2 = new Promise((resolve,reject)=>{
+           if(this.status === FULFILLED){
+               setTimeout(()=>{
+                   try{
+                       let x = onFulfilled(this.value)
+                       resolvePromise(promise2,x,reslove,reject);
+                   }catch(e){
+                       reject(e)
+                   }
+               },0)
+           }
+           if(this.status === REJECTED){
+                setTimeout(()=>{
+                    try{
+                       let x = onRejected(this.reason)
+                       resolvePromise(promise2,x,resolve,reject)
+                    }catch(e)({
+                       reject(e)
+                    })
+                })
+            }
+
+            if(this.status === PENDING){
+                this.onResolveCallbacks.push(()=>{
+                    setTimeout(()=>{
+                        try{
+                            let x = onFulfilled(this.value);
+                            resolvePromise(promise,x,resolve,reject)
+                        }catch(e){
+                            reject(e)
+                        }
+                    })
+                })
+                this.onRejectedCallbacks.push(()=>{
+                    setTimeout(()=>{
+
+                    })
+                })
+            }
+        });
+
+
+        
+
+       return promise2;
+   }
+}
+
+const a = new Promise((reject)=>{reject()});
+ 
+a().then(onFulfilled, onRejected);
 ```
 
-###
+### 
 ```
 
 ```  
