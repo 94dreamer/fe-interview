@@ -24,8 +24,9 @@
 - #### [浏览器原理](./浏览器原理)
     - 浏览器架构
     - 浏览器特性
-    - 浏览器渲染过程
     - Web安全
+    - 浏览器渲染过程
+    - EventLoop
 - #### [Node](./Node)
     - EventLoop
     - Stream
@@ -86,8 +87,4 @@
 - #### [项目构建/webpack](./webpack)
 - #### [HTTP/Web安全](./http)
 - #### [前端评级的生疏知识点](./fe)
-
-> 参考
-
-https://github.com/CyC2018/CS-Notes
 
