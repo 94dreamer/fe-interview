@@ -18,6 +18,15 @@ ES Modules 编译时输出接口，输出值引用。支持静态分析
 
 [前端模块化——彻底搞懂 AMD、CMD、ESM 和 CommonJS](https://www.cnblogs.com/chenwenhao/p/12153332.html)
 
+## Gulp 和 Webpack 的区别
+
+都是前端工程化对资源做处理的工具。
+
+|         | 核心     | 支持模块化   | 使用特点   |
+| ------- | -------- | ------------ | ---------- |
+| Gulp    | 任务流   | 需要额外引入 | 命令式编写 |
+| Webpack | 模块打包 | 内置         | 配置式编写 |
+
 ## 手写一个精简的 webpack
 
 1. 读取 webpack.config.js，获取 config

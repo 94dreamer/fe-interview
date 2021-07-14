@@ -23,10 +23,12 @@
 
 svg 输出的是 DOM 节点，而 canvas 是一整张画布，svg 是矢量图形，拉伸不会失真，而 canvas 是像素图形。
 
-## RequestAnimateFrame
+## RequestAnimateFrame 和应用场景
 
 背景：解决 setTimeout 延时性不稳定导致的动画卡顿的问题
 特点：浏览器页面渲染的每一帧开始会调用 RequestAnimateFrame 的回调函数。
+场景：
+todo
 
 ## RequestIdleCallback
 
