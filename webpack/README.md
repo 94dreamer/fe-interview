@@ -1,5 +1,20 @@
 # Webpack
 ### ESM和CJM有什么本质的区别？
+CommonJS 是Node一开始实现的模块化方案，他有一些特点，没有异步请求模块问题。
+CommonJS 利用这几个api来实现模块化，require/module/exports。
+每一个模块会被函数包裹，传入参数，被其他模块require的时候才会去动态执行。
+
+ES Modules 是ECMAScript借鉴社区的模块化方案形成的。
+主要的特征是静态分析引入依赖，在编译时候就确定了。
+ES6的模块不是对象，import命令会被 JavaScript 引擎静态分析，在编译时就引入模块代码，而不是在代码运行时加载，所以无法实现条件加载。也正因为这个，使得静态分析成为可能。
+ES Modules 支持编译时候去除无用代码。
+
+区别：
+
+CommonJS 运行时加载，输出的是值拷贝，通过函数传参确定了。
+ES Modules 编译时输出接口，输出值引用。支持静态分析
+
+[前端模块化——彻底搞懂AMD、CMD、ESM和CommonJS](https://www.cnblogs.com/chenwenhao/p/12153332.html)
 
 ### 手写一个精简的webpack
 1. 读取webpack.config.js，获取config
@@ -37,4 +52,13 @@
     - Scope Hoisting 尽可能把模块的代码按照引用顺序放在一个闭包里，然后重命名变量防止冲突
     - 动态Polyfill服务
 
-### Webpack的热更新原理是怎么样的？ 
+### Webpack的热更新是怎么做到的？原理是怎么样的？
+热更新分为这么这么几部分
+1. webpack监听代码变化，执行编译
+2. HMR用Webpack-dev-server通过websocket通知浏览器
+3. HRM runtime 替换模块，如果无法更新就刷新页面
+
+### Webpack如何实现SSR打包？
+
+
+
