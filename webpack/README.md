@@ -53,12 +53,38 @@ ES Modules 编译时输出接口，输出值引用。支持静态分析
     - 动态Polyfill服务
 
 ### Webpack的热更新是怎么做到的？原理是怎么样的？
-热更新分为这么这么几部分
+#### 过程
 1. webpack监听代码变化，执行编译
-2. HMR用Webpack-dev-server通过websocket通知浏览器
-3. HRM runtime 替换模块，如果无法更新就刷新页面
+2. 通过websocket通知浏览器
+3. HRM runtime 替换内存中的模块，如果无法更新就刷新页面
+#### 结构
+- Webpack Compile：将 JS 编译成 Bundle
+- HMR Server：将热更新的文件输出给 HMR Runtime
+- Bundle Server：提供文件在浏览器访问
+- HMR Runtime：会被注入到浏览器，更新文件的变化
+- bundle.js：构建输出的文件
+
+![HMR](./HMR.png)
+
 
 ### Webpack如何实现SSR打包？
+服务端
+- 使用react-dom/server的renderToString方法将React组件渲染成字符串
+- 服务端路由返回对应的模板
+客户端
+- 打包出针对服务端的组件
+
+
+
+### 为什么SSR比CSR快？
+#### SSR的过程
+在服务端完成了额外的业务数据请求，模板渲染，浏览器一拿到就可以进行DOM树、样式计算、合成、分层、绘制，生成真正的可见内容。
+#### CSR的过程
+在服务端完成了基本的用户数据请求，返回模板，浏览器拿到渲染的是空的页面，然后加载执行JS，然后网络请求，插入DOM，再开始重排。
+#### 区别
+- 内网机器拉取数据更快，减少客户端的网络请求。
+- CSR对于耗时的网络任务没有充分利用并行，时间浪费在串行的网络传输中，页面DOM更新，渲染后置。
+
 
 
 
