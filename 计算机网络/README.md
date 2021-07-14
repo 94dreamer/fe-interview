@@ -59,8 +59,8 @@ UDP提供实时性传输，面向交付
 Cache-Control优先级更高后出，就是为了补全 Expires 是客户端时间不准确也不够全面的问题。
 
 协商缓存：403
-两个header控制： if-modified-since/last-modified E-tag/if-none-match 
-E-tag优先级更高，因为 last-modify-time 虽然是服务端时间，但是是秒级别的，E-tag是文本摘要更准确些。
+两个header控制： if-modified-since/last-modified if-none-match/E-tag
+E-tag优先级更高，因为 last-modify-time 虽然是服务端时间，但是是秒级别的，E-tag是内容加修改时间hash更准确些。
 E-tag在分布式系统上也会有问题，因为tag根据内容和创建时间的hash决定的。
 
 协商缓存的头先由服务器返回，下一次请求带上。

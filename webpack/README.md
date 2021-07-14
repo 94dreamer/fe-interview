@@ -1,4 +1,6 @@
 # Webpack
+### ESM和CJM有什么本质的区别？
+
 ### 手写一个精简的webpack
 1. 读取webpack.config.js，获取config
 2. 运行webpack的compiler，传入config
@@ -35,7 +37,4 @@
     - Scope Hoisting 尽可能把模块的代码按照引用顺序放在一个闭包里，然后重命名变量防止冲突
     - 动态Polyfill服务
 
-### ESM和CJM有什么本质的区别？
-
-
-### 
+### Webpack的热更新原理是怎么样的？ 
