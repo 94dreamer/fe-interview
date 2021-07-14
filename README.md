@@ -1,4 +1,5 @@
-# Front-End Interview
+# Front-End Interview 
+## 面向前端架构师之路
 
 技术栈这个词再形象不过。
 
@@ -54,7 +55,6 @@
     - Babel
     - AST
     - loader/plugin
-    - 构建流程
     - 构建优化
 - #### [前端工程](./前端工程)
     - 性能优化
