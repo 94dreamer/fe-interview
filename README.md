@@ -80,12 +80,3 @@
     - 技术氛围打造
     - 人才成长与梯队建设
 
-旧的
-- #### [HTML](./html)
-- #### [CSS](./css)
-- #### [JavaScript](./javascript)
-- #### [性能优化](./performance)
-- #### [项目构建/webpack](./webpack)
-- #### [HTTP/Web安全](./http)
-- #### [前端评级的生疏知识点](./fe)
-
