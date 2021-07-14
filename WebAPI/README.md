@@ -1,6 +1,8 @@
 # WebAPI
 
-## 说下对 cookie 的理解
+## 说下对 cookie 的理解，有哪些特性？是否可以跨域进行设置 cookie？
+
+// todo
 
 背景：浏览器为了解决 HTTP 协议无状态的问题引入的信息储存技术
 
@@ -11,6 +13,10 @@
 - 过期：cookie 由 Expires/Max-Age 字段来标识过期时间
 - 安全性：SameSite(CSRF)/HttpOnly(XSS document.cookie)/Secure(HTTPS)
 - 自定义范围：domain/path
+
+## 事件流是什么？如果事件没有冒泡可能是什么原因？冒泡但是没有到最外层，有什么办法找到原因？
+
+## 冒泡和捕获是什么？区别？target 是什么？
 
 ## iframe 有那些缺点？
 

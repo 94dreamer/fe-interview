@@ -5,303 +5,333 @@ function typeof(obj){
     return Object.prototype.toString.call(obj).slice(8,-1).toLowerCase();
 }
 ```
+
 ### 继承
 
 ### 数组去重
 
 ```js
-function unique(arr){
-    const map={};
-    const newArr=[]
-    for(var i=0; i<arr.length ;i++ ){
-        if(!map[arr[i]]){
-            map[arr[i]]=true;
-            newArr.push(arr[i]);
-        }
+function unique(arr) {
+  const map = {};
+  const newArr = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (!map[arr[i]]) {
+      map[arr[i]] = true;
+      newArr.push(arr[i]);
     }
+  }
 }
 ```
 
 ```es6
-const unique = arr=>[...new Set(arr)]
+const unique = (arr) => [...new Set(arr)];
 ```
 
 ### 数组扁平化
-```js
-const flat = (arr,index) =>{
-    const result=[];
-    if(index===0)return result;
 
-    for(let i=0; i<arr.length;i++){
-        if(!Array.isArray(arr[i])){
-            result.push(arr[i]);
-        }else{
-            result.connect( ...flat(arr[i], index==null ?index: index-1) )
-        }
+```js
+const flat = (arr, index) => {
+  const result = [];
+  if (index === 0) return result;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (!Array.isArray(arr[i])) {
+      result.push(arr[i]);
+    } else {
+      result.connect(...flat(arr[i], index == null ? index : index - 1));
     }
-    return result;
-}
+  }
+  return result;
+};
 ```
 
 ### 浅拷贝
+
 ```js
-const lowCopy=(obj)=>{
-    const newObj={};
-    for(let key in obj){
-        if(obj.hasOwnProperty(key)){
-            newObj[key]= obj[key];
-        }
+const lowCopy = (obj) => {
+  const newObj = {};
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] = obj[key];
     }
-    return newObj;
-}
+  }
+  return newObj;
+};
 ```
 
 ### 简单深拷贝 不考虑内置对象和函数
+
 ```js
-const deepCopy=(obj)=>{
-    if(typeof obj !== 'object' ){
-        return obj
-    }else{
-        const newObj= obj instanceof Array ? [] : {}
-        for(let key in obj){
-            if(obj.hasOwnProperty(key)){
-                newObj[key] = deepCopy(obj[key]);
-            }
-        }
-        return newObj
+const deepCopy = (obj) => {
+  if (typeof obj !== "object") {
+    return obj;
+  } else {
+    const newObj = obj instanceof Array ? [] : {};
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        newObj[key] = deepCopy(obj[key]);
+      }
     }
-}
+    return newObj;
+  }
+};
 ```
 
 ### 复杂深拷贝 考虑函数和内置对象 以及 循环引用
-```js
-const isObject = (target) => (typeof target === 'object' || typeof target === 'function' ) && target !==null;
 
-function deepClone(target,map=new WeakMap()){
-    if(map.get(target)){
-        return target;
+```js
+const isObject = (target) =>
+  (typeof target === "object" || typeof target === "function") &&
+  target !== null;
+
+function deepClone(target, map = new WeakMap()) {
+  if (map.get(target)) {
+    return target;
+  }
+  let constructor = target.constructor;
+  // 获取当前值的构造函数；name是类型
+  if (/^(RegExp|Date)$/i.test(constructor.name)) {
+    // 创建一个新的实例
+    return new contructor(target);
+  }
+  if (isObject(target)) {
+    map.set(target, true); // 为循环引用的对象做标记
+    const cloneTarget = Array.isArray(target) ? [] : {};
+    for (let prop in target) {
+      if (target.hasOwnProperty(prop)) {
+        cloneTarget[prop] = deepClone(target[props], map);
+      }
     }
-    let constructor = target.constructor;
-    // 获取当前值的构造函数；name是类型
-    if(/^(RegExp|Date)$/i.test(constructor.name)){
-        // 创建一个新的实例
-        return new contructor(target);
-    }
-    if(isObject(target)){
-        map.set(target,true); // 为循环引用的对象做标记
-        const cloneTarget = Array.isArray(target) ? [] : {};
-        for(let prop in target){
-            if(target.hasOwnProperty(prop)){
-                cloneTarget[prop] = deepClone(target[props],map)
-            }
-        }
-        return cloneTarget;
-    }else{
-        return target;
-    }
+    return cloneTarget;
+  } else {
+    return target;
+  }
 }
 ```
 
 ### 发布订阅模式
+
 ```js
-class SyncHook{
-    constructor(arg=[]){
-        this.arg=arg;
-        this.tasks=[];
-    }
-    tap(name,callback){
-        this.tasks.push({
-            name,
-            callback
-        })
-    }
-    call(...arg){
-        arg.length = this.arg.length;
-        this.tasks.forEach(task=>{
-            task.callback(arg)
-        })
-    }
+class SyncHook {
+  constructor(arg = []) {
+    this.arg = arg;
+    this.tasks = [];
+  }
+  tap(name, callback) {
+    this.tasks.push({
+      name,
+      callback,
+    });
+  }
+  call(...arg) {
+    arg.length = this.arg.length;
+    this.tasks.forEach((task) => {
+      task.callback(arg);
+    });
+  }
 }
 const hook = new SyncHook(1);
-hook.tap('log',function(name){
-    console.log(name);
-})
-hooks.call('xxx')
+hook.tap("log", function (name) {
+  console.log(name);
+});
+hooks.call("xxx");
 ```
 
-### 解析URL参数为对象
+### 解析 URL 参数为对象
+
 ```js
-function parseParam(url){
-    const params ={}; 
-    const paramsString=url.split('?')[1];
-    if(!paramsString)return params;
-    paramsString.split('&').forEach(byte=>{
-        const arr= byte.split('=')
-        params[arr[0]]= decodeURIComponent(arr[1]);
-    });
-    return params
+function parseParam(url) {
+  const params = {};
+  const paramsString = url.split("?")[1];
+  if (!paramsString) return params;
+  paramsString.split("&").forEach((byte) => {
+    const arr = byte.split("=");
+    params[arr[0]] = decodeURIComponent(arr[1]);
+  });
+  return params;
 }
-parseParam('https://bz1d7.feishu.cn/base/appcQf?table=tblxp&view=veJVd')
+parseParam("https://bz1d7.feishu.cn/base/appcQf?table=tblxp&view=veJVd");
 ```
 
 ### 字符串模块
+
 ```js
-function render(template,data){
-    const reg = /\{\{(\w+)\}\}/; // 模板字符串正则
-    if(reg.test(template)){
-        const key = reg.exec(template)[1];
-        template = template.replace(reg, data[key]==null?'':data[key] );
-        return render(template,data)
-    }
-    return template;
+function render(template, data) {
+  const reg = /\{\{(\w+)\}\}/; // 模板字符串正则
+  if (reg.test(template)) {
+    const key = reg.exec(template)[1];
+    template = template.replace(reg, data[key] == null ? "" : data[key]);
+    return render(template, data);
+  }
+  return template;
 }
 
-let template1='我是{{name}}，年龄{{age}}，性别{{sex}}'
-render(template1,{name:'布兰',age:12})
+let template1 = "我是{{name}}，年龄{{age}}，性别{{sex}}";
+render(template1, { name: "布兰", age: 12 });
 ```
 
 ### 图片懒加载
+
 ```js
 // 思路 给所有的图片图片加一个data-src属性，src为默认图 需要做的是监听所有图片的onLoad事件，如果距离 视区顶部的距离 < 屏幕高度，就可以替换 src了。
-const imgList = [ ...document.querySelectorAll('img') ];
-const imgLazyLoad=(function(){
-    return function(){
-        for(let i=0;i<imgList.length;i++){
-            let rect = imgList[i].getBoundingClientRect()
-            if(react.top < window.innerHeight){
-                img.src = img.dataset.src;
-                imgList.splice(i,1);
-                imgList.length===0 && document.removeEventListener('scroll', imgLazyLoad)
-                i--
-            }
-        }
+const imgList = [...document.querySelectorAll("img")];
+const imgLazyLoad = (function () {
+  return function () {
+    for (let i = 0; i < imgList.length; i++) {
+      let rect = imgList[i].getBoundingClientRect();
+      if (react.top < window.innerHeight) {
+        img.src = img.dataset.src;
+        imgList.splice(i, 1);
+        imgList.length === 0 &&
+          document.removeEventListener("scroll", imgLazyLoad);
+        i--;
+      }
     }
-})()
-document.addEventListener('scroll', imgLazyLoad)
+  };
+})();
+document.addEventListener("scroll", imgLazyLoad);
 ```
 
 ### 函数防抖
-> 一般用作搜索框输入，触发高频时间N秒后只会执行一次，如果N秒内事件再次触发，则会重新计时
+
+> 一般用作搜索框输入，触发高频时间 N 秒后只会执行一次，如果 N 秒内事件再次触发，则会重新计时
+
 ```js
-function debounce(func, wait){
-    let timeout;
-    return function(){
-        const context = this;
-        var args=arguments;
-        timeout && clearTimeout(timeout);
-        timeout = setTimout(function(){
-            func.call(context,args);
-        },wait);
-    }
+function debounce(func, wait) {
+  let timeout;
+  return function () {
+    const context = this;
+    var args = arguments;
+    timeout && clearTimeout(timeout);
+    timeout = setTimout(function () {
+      func.call(context, args);
+    }, wait);
+  };
 }
 
-input.oninput = debounce(function(){console.log('xxx')},1000)
+input.oninput = debounce(function () {
+  console.log("xxx");
+}, 1000);
 ```
 
 ### 函数节流
-> 触发高频事件，且N秒只执行一次
+
+> 触发高频事件，且 N 秒只执行一次
+
 ```js
-function throttle(func,time){
-    let open=true;
-    return function(){
-        if(open){
-            open = false;
-            setTimeout(function(){
-                open = true
-            },time)
-            func(this,arguments);
-        }
+function throttle(func, time) {
+  let open = true;
+  return function () {
+    if (open) {
+      open = false;
+      setTimeout(function () {
+        open = true;
+      }, time);
+      func(this, arguments);
     }
+  };
 }
 
-button.onclick=throttle(function(){
-    console.log('xxxx');
-},1000)
+button.onclick = throttle(function () {
+  console.log("xxxx");
+}, 1000);
 ```
 
 ### 函数柯里化
+
 > 将使用多个参数的函数转换成一系列使用一个参数的函数的技术。
 > 例子
+
 ```js
-function add(a,b,c){
-    return a+b+c
+function add(a, b, c) {
+  return a + b + c;
 }
-add(1,2,3)
+add(1, 2, 3);
 let addCurry = curry(add);
 addCurry(1)(2)(3);
 ```
-> 实现curry
+
+> 实现 curry
+
 ```js
-function curry(func){
-    let arr=[];
-    return function(){
-        arr.push(...arguments)
-        arr.length>=func.length && func.call(this,...arr);
-        return arguments.callee;
-    }
+function curry(func) {
+  let arr = [];
+  return function () {
+    arr.push(...arguments);
+    arr.length >= func.length && func.call(this, ...arr);
+    return arguments.callee;
+  };
 }
-function curry2(fn){
-    let judge=(...args)=>{
-        if(args.length===fn.length)return fn(...args)
-        return (...arg)=>judge(...args,...arg)
-    }
-    return judge
+function curry2(fn) {
+  let judge = (...args) => {
+    if (args.length === fn.length) return fn(...args);
+    return (...arg) => judge(...args, ...arg);
+  };
+  return judge;
 }
 ```
 
 ### JSONP
-> JSONP 核心原理：script标签不受同源策略约束，所以可以用来进行跨域请求，优点是兼容性好，但是只能用于GET请求
-```js
-const jsonp=({ url, params , callbackName})=>{
-    // callbackName 随机生成
-    const gennerateUrl=()=>{
-        let dataSrc = '';
-        for(let key in params){
-            if(params.hasOwnProperty(key)){
-                dataSrc += `${key}=${params[key]}&`
-            }
-        }
-        dataSrc += `callback=${callbackName}`
-        return `${url}?${dataSrc}`
-    }
-    return new Promise((resolve,reject)=>{
-        const scriptEle = document.createElement('script')
-        scriptEle.src =gennerateUrl();
-        document.body.appendChild(scriptEle);
-        window[callbackName]=(data)=>{
-            resolve(data);
-            document.removeChild(scriptEle)
-        }
-    })
-}
 
-jsonp('',{a:1}, 'jsonp00001').then(data=>{})
+> JSONP 核心原理：script 标签不受同源策略约束，所以可以用来进行跨域请求，优点是兼容性好，但是只能用于 GET 请求
+
+```js
+const jsonp = ({ url, params, callbackName }) => {
+  // callbackName 随机生成
+  const gennerateUrl = () => {
+    let dataSrc = "";
+    for (let key in params) {
+      if (params.hasOwnProperty(key)) {
+        dataSrc += `${key}=${params[key]}&`;
+      }
+    }
+    dataSrc += `callback=${callbackName}`;
+    return `${url}?${dataSrc}`;
+  };
+  return new Promise((resolve, reject) => {
+    const scriptEle = document.createElement("script");
+    scriptEle.src = gennerateUrl();
+    document.body.appendChild(scriptEle);
+    window[callbackName] = (data) => {
+      resolve(data);
+      document.removeChild(scriptEle);
+    };
+  });
+};
+
+jsonp("", { a: 1 }, "jsonp00001").then((data) => {});
 ```
 
-### Ajax 
+### Ajax
+
 > 监听 兼容
+
 ```js
-const getJSON = function(url){
-    return new Promise((resolve,reject)=>{
-        const xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Mscrosoft.XMLHttp');
-        xhr.open('GET',url,false);
-        xhr.setRequestHeader('Accept','application/json');
-        xhr.onreadystatechange=function(){
-            if(xhr.readyState!== this.DONE )return;
-            if(xhr.status===20 || xh.status===304){
-                resolve(xhr.responseText)
-            }else{
-                reject(new Error(xhr.responseText))
-            }
-        }
-        xhr.send();
-    })
-}
+const getJSON = function (url) {
+  return new Promise((resolve, reject) => {
+    const xhr = XMLHttpRequest
+      ? new XMLHttpRequest()
+      : new ActiveXObject("Mscrosoft.XMLHttp");
+    xhr.open("GET", url, false);
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState !== this.DONE) return;
+      if (xhr.status === 20 || xh.status === 304) {
+        resolve(xhr.responseText);
+      } else {
+        reject(new Error(xhr.responseText));
+      }
+    };
+    xhr.send();
+  });
+};
 ```
 
 ### Promise
-> then考虑链式调用，所以得返回一个新的primise
-> 处理异步问题，所以的先用callback先存起来
+
+> then 考虑链式调用，所以得返回一个新的 primise
+> 处理异步问题，所以的先用 callback 先存起来
+
 ```js
 const PENDING = 'pending';
 const FULFILLED = 'fulfilled';
@@ -382,18 +412,71 @@ class Promise{
         });
 
 
-        
+
 
        return promise2;
    }
 }
 
 const a = new Promise((reject)=>{reject()});
- 
+
 a().then(onFulfilled, onRejected);
 ```
 
-### 
+### 连续最大子数组之和
+
+### 实现拖拽
+
+### 手写 diff，实现两个树的 diff 算法。分别打印出新增、删除、修改的节点
+
+### 实现一个 promise 并发调度， 每次最多请求两个
+
+### 给了一段很长很绕的代码，判断哪里可能会造成内存泄漏，在不修改源代码的基础上，如何优化，避免内存泄漏
+
+### js 手写动画的优化方式
+
+### 算法题：买卖股票的最佳时机
+
+给定一个整数数组 prices ，它的第 i 个元素 prices[i] 是一支给定的股票在第 i 天的价格。
+设计一个算法来计算你所能获取的最大利润。你最多可以完成 1 笔交易。
+例如 prices = [1,5,11,2,4,3,0,9]
+
+### 手写一个 promiseAll
+
+### 手写 bind 绑定
+
+### 两大数相加
+
+### 查找数组最大深度 5 分钟内做完
+
+### 红 3 秒 绿灯 1s 黄灯 2 秒 不停闪烁
+
+### 实现 Event emitter
+
+### 执行顺序，并解释为什么
+
+```
+setTimeout(function() {
+  console.log(1)
+}, 0)
+async function async1() {
+  console.log('2');
+await async2()
+  console.log('3');
+}
+async function async2() {
+  console.log('4');
+}
+async1()
+
+requestAnimationFrame(() => console.log('5'));
+
+new Promise(resolve => {
+  console.log('6')
+resolve()
+}).then(function() {
+  console.log('7')
+})
 ```
 
-```  
+### 改写上一题的 async2 函数，在不使用 async 的前提下，保持输出顺序不变

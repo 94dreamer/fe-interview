@@ -16,9 +16,11 @@ Node 提供了网络、文件等线程去处理这些任务。
 
 ## Node 的 eventLoop 和浏览器的区别
 
-## Buffer 的本质是什么？
+## Node 的 Buffer 的本质是什么？
 
 ## Node 的 Stream 的本质是什么？
+
+## Node 的 vm 是什么东西
 
 ## Node 的 Cluster 和 child_process 是怎么样运用来开启多进程并保证负载均衡的？
 
@@ -31,6 +33,8 @@ libuv 通过管道和 socket 实现。
 
 退出终端，程序不退出
 nohup
+
+## PM2 重启机制，服务崩溃了怎么办
 
 ## Koa 的洋葱模型和中间件的原理是什么？
 

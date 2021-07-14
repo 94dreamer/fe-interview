@@ -18,6 +18,8 @@ ES Modules 编译时输出接口，输出值引用。支持静态分析
 
 [前端模块化——彻底搞懂 AMD、CMD、ESM 和 CommonJS](https://www.cnblogs.com/chenwenhao/p/12153332.html)
 
+## babel 能完全实现 import 吗
+
 ## Gulp 和 Webpack 的区别
 
 都是前端工程化对资源做处理的工具。
@@ -45,6 +47,10 @@ ES Modules 编译时输出接口，输出值引用。支持静态分析
 - plugin 的触发机制是 webpack 的事件流程触发了 plugin 绑定的钩子函数
 - plugin 的本质是在 webpack 打包的流程中节点上获取 compition 对象做辅助流程的事务
 
+## Webpack treeshaking 的原理
+
+## webpack 怎么处理 css，怎么处理图片的原理
+
 ## webpack 的构建速度和生产内容优化
 
 1. 分析工具
@@ -65,6 +71,8 @@ ES Modules 编译时输出接口，输出值引用。支持静态分析
    - treeShaking DCE/ES6
    - Scope Hoisting 尽可能把模块的代码按照引用顺序放在一个闭包里，然后重命名变量防止冲突
    - 动态 Polyfill 服务
+
+## 现在有一个 webpack5 的项目，怎么提高编译的速度
 
 ## Webpack 的热更新是怎么做到的？原理是怎么样的？
 
