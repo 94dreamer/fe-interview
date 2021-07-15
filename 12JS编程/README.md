@@ -459,24 +459,30 @@ a().then(onFulfilled, onRejected);
 setTimeout(function() {
   console.log(1)
 }, 0)
+
 async function async1() {
   console.log('2');
-await async2()
+  await async2()
   console.log('3');
 }
+
 async function async2() {
   console.log('4');
 }
+
 async1()
 
 requestAnimationFrame(() => console.log('5'));
 
 new Promise(resolve => {
   console.log('6')
-resolve()
+  resolve()
 }).then(function() {
   console.log('7')
 })
-```
+
+``` 
+
+2 6 5 3 4 3 7 5 1
 
 ### 改写上一题的 async2 函数，在不使用 async 的前提下，保持输出顺序不变

@@ -2,19 +2,10 @@
 
 ## ESM 和 CJM 有什么本质的区别？
 
-CommonJS 是 Node 一开始实现的模块化方案，他有一些特点，没有异步请求模块问题。
-CommonJS 利用这几个 api 来实现模块化，require/module/exports。
-每一个模块会被函数包裹，传入参数，被其他模块 require 的时候才会去动态执行。
-
-ES Modules 是 ECMAScript 借鉴社区的模块化方案形成的。
-主要的特征是静态分析引入依赖，在编译时候就确定了。
-ES6 的模块不是对象，import 命令会被 JavaScript 引擎静态分析，在编译时就引入模块代码，而不是在代码运行时加载，所以无法实现条件加载。也正因为这个，使得静态分析成为可能。
-ES Modules 支持编译时候去除无用代码。
-
-区别：
-
-CommonJS 运行时加载，输出的是值拷贝，通过函数传参确定了。
-ES Modules 编译时输出接口，输出值引用。支持静态分析
+| 模块规范   | 引用特征 | 是否提升 | 运行方式     | 支持 treeShaking |
+| ---------- | -------- | -------- | ------------ | ---------------- |
+| CommonJS   | 值拷贝   | 不提升   | 运行时加载   | 不支持           |
+| ES Modules | 值引用   | 提升     | 静态编译输出 | 支持             |
 
 [前端模块化——彻底搞懂 AMD、CMD、ESM 和 CommonJS](https://www.cnblogs.com/chenwenhao/p/12153332.html)
 
