@@ -8,8 +8,11 @@
 | ES Modules | 值引用   | 提升     | 可读写    | 静态编译输出 | 支持             |
 
 [前端模块化——彻底搞懂 AMD、CMD、ESM 和 CommonJS](https://www.cnblogs.com/chenwenhao/p/12153332.html)
+[](https://juejin.cn/post/6844903861166014478)
 
 ## babel 能完全实现 import 吗
+
+不能
 
 ## Gulp 和 Webpack 的区别
 
