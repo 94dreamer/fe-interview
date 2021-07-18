@@ -50,6 +50,7 @@ componentWillMount/componentWillRecieveProps/componentWillUpdate
 
 - 组件用 Class 过重，有生命周期，又很少被利用
 - Class 组件的状态复用困难
+- 逻辑被生命周期分散关注点
 - 让 Function 组件能够保存状态
 - 践行代数效应
 
