@@ -430,6 +430,11 @@ a().then(onFulfilled, onRejected);
 ### 手写 diff，实现两个树的 diff 算法。分别打印出新增、删除、修改的节点
 
 ### 实现一个 promise 并发调度， 每次最多请求两个
+```js
+function limiteLoad(url,handler,limit){
+  
+}
+```
 
 ### 给了一段很长很绕的代码，判断哪里可能会造成内存泄漏，在不修改源代码的基础上，如何优化，避免内存泄漏
 
