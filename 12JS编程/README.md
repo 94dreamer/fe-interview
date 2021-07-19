@@ -1,3 +1,5 @@
+# JS编程
+
 ### 类型判断
 
 ```js
@@ -7,6 +9,22 @@ function typeof(obj){
 ```
 
 ### 继承
+
+### 实现 reduce
+
+```js
+Array.prototype.reduce2 = function (func, init) {
+  let total = init;
+  for (let i = 0; i < this.length; i++) {
+    total = func(total, this[i], i, this);
+  }
+  return total;
+};
+const arr = [1, 2, 3, 4];
+arr.reduce2((total, cur, index, arr) => {
+  return total + cur;
+}, 0);
+```
 
 ### 数组去重
 
@@ -327,7 +345,9 @@ const getJSON = function (url) {
 };
 ```
 
-### Promise
+## Promise
+
+### 1. 手写一个promise
 
 > then 考虑链式调用，所以得返回一个新的 primise
 > 处理异步问题，所以的先用 callback 先存起来
@@ -410,10 +430,6 @@ class Promise{
                 })
             }
         });
-
-
-
-
        return promise2;
    }
 }
@@ -423,18 +439,73 @@ const a = new Promise((reject)=>{reject()});
 a().then(onFulfilled, onRejected);
 ```
 
-### 连续最大子数组之和
+### 2. 手写一个 PromiseAll
 
-### 实现拖拽
-
-### 手写 diff，实现两个树的 diff 算法。分别打印出新增、删除、修改的节点
-
-### 实现一个 promise 并发调度， 每次最多请求两个
 ```js
-function limiteLoad(url,handler,limit){
-  
+function PromiseAll(promises){
+    return new Promise(function(resolve,reject){
+      	const resultArr=[];
+        let count=0
+        for(let i=0;i<promises.length;i++){
+            Promise.resolve(promises[i]).then(data=>{
+				resultArr[i] = data;
+                count++;
+                count===promises.length && resolve(resultArr);
+            }).catch(err=>{
+                reject(err);
+            })
+        }  
+    })
 }
 ```
+
+### 3. 实现一个带并发限制的promise异步调度器
+
+```js
+// 的确一下子写不出来 todo
+class Scheduler{
+    constructor(limit){
+        this.pList=[];
+        this.limit= limit || 2;
+        this.workList=[];
+    	this.status= 'end'
+    }
+    run(){
+        //if(this.status==='start')return;
+        //this.status = 'start';
+     	
+        while(this.workList.length < this.limit && this.pList.length > 0){
+            this.workList.push(this.pList.shift());	// 取任务
+        }
+
+        return Promise.race(this.workList.map(work=>work())).then(()=>{
+            // 怎么找到哪个好了从workList中剔除呢？
+            this.workList.push(this.pList.shift());	// 加一个到里面
+            return this.run();
+        })
+    }
+    add(promiseCreator){
+        if(!this.pList)this.pList=[];
+        this.pList.push(promiseCreator);
+        this.run();
+    }
+}
+const timeout=time=>new Promise(resolve=>{
+    setTimeout(resolve,time)
+})
+const scheduler = new Scheduler();
+const addTask = (time,order)=>{
+    scheduler.add(()=>timeout(time).then(()=>console.log(order)))
+}
+addTask(1000,'1')
+addTask(500,'2')
+addTask(300,'3')
+addTask(400,'4')
+```
+
+## 树
+
+### 手写 diff，实现两个树的 diff 算法。分别打印出新增、删除、修改的节点
 
 ### 给了一段很长很绕的代码，判断哪里可能会造成内存泄漏，在不修改源代码的基础上，如何优化，避免内存泄漏
 
@@ -445,8 +516,6 @@ function limiteLoad(url,handler,limit){
 给定一个整数数组 prices ，它的第 i 个元素 prices[i] 是一支给定的股票在第 i 天的价格。
 设计一个算法来计算你所能获取的最大利润。你最多可以完成 1 笔交易。
 例如 prices = [1,5,11,2,4,3,0,9]
-
-### 手写一个 promiseAll
 
 ### 手写 bind 绑定
 
@@ -486,8 +555,13 @@ new Promise(resolve => {
   console.log('7')
 })
 
-``` 
+```
 
 2 6 5 3 4 3 7 5 1
 
 ### 改写上一题的 async2 函数，在不使用 async 的前提下，保持输出顺序不变
+
+> 引用
+
+[最全的手写 JS 面试题](https://juejin.cn/post/6968713283884974088)
+[死磕 36 个 JS 手写题（搞懂后，提升真的大）](https://juejin.cn/post/6946022649768181774)

@@ -15,7 +15,9 @@
 | 基数排序 | n          | 稳定   | 非原地   |
 
 ## 数组
+
 寻找两个正序数组的中位数
+连续最大子数组之和
 
 ## 链表
 
@@ -56,13 +58,12 @@
 2. 子数组问题
 
 ## 动态规划
- 
+
 1. 最短编辑路径
-构造矩阵 min(  dp[i-1][j-1] + diff , dp[i-1][j]+1 , dp[i][j-1]+1 )
+   构造矩阵 min( dp[i-1][j-1] + diff , dp[i-1][j]+1 , dp[i][j-1]+1 )
 
 2. 接雨水
-方程式 f(n) = min(max(left),max(right))- h[n]  
-
+   方程式 f(n) = min(max(left),max(right))- h[n]
 
 引用：
 [数据结构与算法之美-极客时间](https://time.geekbang.org/column/intro/126)
