@@ -1,4 +1,4 @@
-# JS编程
+# JS 编程
 
 ### 类型判断
 
@@ -347,7 +347,7 @@ const getJSON = function (url) {
 
 ## Promise
 
-### 1. 手写一个promise
+### 1. 手写一个 promise
 
 > then 考虑链式调用，所以得返回一个新的 primise
 > 处理异步问题，所以的先用 callback 先存起来
@@ -442,66 +442,76 @@ a().then(onFulfilled, onRejected);
 ### 2. 手写一个 PromiseAll
 
 ```js
-function PromiseAll(promises){
-    return new Promise(function(resolve,reject){
-      	const resultArr=[];
-        let count=0
-        for(let i=0;i<promises.length;i++){
-            Promise.resolve(promises[i]).then(data=>{
-				resultArr[i] = data;
-                count++;
-                count===promises.length && resolve(resultArr);
-            }).catch(err=>{
-                reject(err);
-            })
-        }  
-    })
+function PromiseAll(promises) {
+  return new Promise(function (resolve, reject) {
+    const resultArr = [];
+    let count = 0;
+    for (let i = 0; i < promises.length; i++) {
+      Promise.resolve(promises[i])
+        .then((data) => {
+          resultArr[i] = data;
+          count++;
+          count === promises.length && resolve(resultArr);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    }
+  });
 }
 ```
 
-### 3. 实现一个带并发限制的promise异步调度器
+### 3. 实现一个带并发限制的 promise 异步调度器
 
 ```js
-// 的确一下子写不出来 todo
-class Scheduler{
-    constructor(limit){
-        this.pList=[];
-        this.limit= limit || 2;
-        this.workList=[];
-    	this.status= 'end'
-    }
-    run(){
-        //if(this.status==='start')return;
-        //this.status = 'start';
-     	
-        while(this.workList.length < this.limit && this.pList.length > 0){
-            this.workList.push(this.pList.shift());	// 取任务
-        }
+class Scheduler {
+  constructor(limit) {
+    this.pList = [];
+    this.limit = limit || 2;
+    this.workList = [];
+  }
+  run() {
+    if (this.workList.length === this.limit) return;
 
-        return Promise.race(this.workList.map(work=>work())).then(()=>{
-            // 怎么找到哪个好了从workList中剔除呢？
-            this.workList.push(this.pList.shift());	// 加一个到里面
-            return this.run();
-        })
+    while (this.workList.length < this.limit && this.pList.length > 0) {
+      const work = this.pList.shift();
+      this.workList.push(work()); // 取任务
     }
-    add(promiseCreator){
-        if(!this.pList)this.pList=[];
-        this.pList.push(promiseCreator);
-        this.run();
-    }
+    Promise.race(this.workList).then(() => {
+      this.workList.forEach((p, index) => {
+        p.then(() => {
+          this.workList.splice(index, 1);
+        });
+      });
+      this.pList.length > 0 && this.run();
+    });
+  }
+  add(promiseCreator) {
+    if (!this.pList) this.pList = [];
+    this.pList.push(promiseCreator);
+    this.run();
+  }
 }
-const timeout=time=>new Promise(resolve=>{
-    setTimeout(resolve,time)
-})
+const timeout = (time) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
 const scheduler = new Scheduler();
-const addTask = (time,order)=>{
-    scheduler.add(()=>timeout(time).then(()=>console.log(order)))
-}
-addTask(1000,'1')
-addTask(500,'2')
-addTask(300,'3')
-addTask(400,'4')
+const addTask = (time, order) => {
+  scheduler.add(() =>
+    timeout(time).then(() => {
+      console.timeLog("answer time", order);
+    })
+  );
+};
+console.time("answer time");
+addTask(1000, "1");
+addTask(500, "2");
+addTask(300, "3");
+addTask(400, "4");
 ```
+
+[视频 00:43:00](https://www.bilibili.com/video/BV19X4y13752)
 
 ## 树
 

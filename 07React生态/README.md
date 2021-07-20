@@ -80,6 +80,16 @@ todo
 
 ## React-Redux 是如何实现的？
 
+Provider：作为容器包裹根组件接受 store，并通过 context 传递给需要的子组件
+connect：
+
+- 高阶组件接收 mapStateToprops 和 mapDispatchToProps，返回真正的容器组件
+- 合并 stateProps、dispatchProps 以及 this.props 传递给 Component
+- componentDidMount 添加 store.subscrible，componentWillUnmount 卸载绑定
+- 当 store 发布通知时，通过 setState({storeState})触发更新
+
 ## 不可变数据怎么实现？
+
+https://github.com/mweststrate/immer
 
 https://juejin.cn/post/6844903859618332680
