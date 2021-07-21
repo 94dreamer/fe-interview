@@ -1,5 +1,7 @@
 # JS 编程
 
+## 原生API实现
+
 ### 类型判断
 
 ```js
@@ -9,6 +11,20 @@ function typeof(obj){
 ```
 
 ### 继承
+
+```js
+
+```
+
+### 手写 bind 绑定
+
+```js
+function bind(context,...args){
+  	return (...rest)=>{
+      	return this.call(context,...args,...reset)
+    }
+}
+```
 
 ### 实现 reduce
 
@@ -365,7 +381,7 @@ class Promise{
        this.onResolvedCallbacks=[];
        this.onRejectCallbacks=[];
 
-       let resolve=(value)=>{
+	let resolve=(value)=>{
            if(this.status===PENDING){
                this.status = FULFILLED;
                this.value = value;
@@ -515,6 +531,20 @@ addTask(400, "4");
 
 ## 树
 
+### 翻转一颗二叉树
+
+```js
+function reserveTree(node){
+	if(!node.left && !node.right)return node;
+  let temp = node.left;
+ 	node.left = reserveTree(node.right);
+  node.right = reserveTree(temp);
+  return node
+}
+```
+
+
+
 ### 手写 diff，实现两个树的 diff 算法。分别打印出新增、删除、修改的节点
 
 ### 给了一段很长很绕的代码，判断哪里可能会造成内存泄漏，在不修改源代码的基础上，如何优化，避免内存泄漏
@@ -527,15 +557,11 @@ addTask(400, "4");
 设计一个算法来计算你所能获取的最大利润。你最多可以完成 1 笔交易。
 例如 prices = [1,5,11,2,4,3,0,9]
 
-### 手写 bind 绑定
-
 ### 两大数相加
 
 ### 查找数组最大深度 5 分钟内做完
 
 ### 红 3 秒 绿灯 1s 黄灯 2 秒 不停闪烁
-
-### 实现 Event emitter
 
 ### 执行顺序，并解释为什么
 
@@ -570,6 +596,62 @@ new Promise(resolve => {
 2 6 5 3 4 3 7 5 1
 
 ### 改写上一题的 async2 函数，在不使用 async 的前提下，保持输出顺序不变
+
+
+
+### 给定一个整数数组，判断是否存在重复元素
+
+```js
+function isRepeat(arr){
+  return new Set(arr).size !== arr.length
+}
+```
+
+## 链表
+
+### 1.给定一个排序链表，删除所有重复的元素，使得每个元素只出现一次
+
+```js
+function deleteRepeat(head){
+  const set = new Set([head.val])
+  let current = head;
+  while(current.next){
+    if( set.has(current.next.val)){
+       current.next = current.next.next
+    }else{
+      set.add(current.next.val)
+      current = current.next
+    }
+  }
+}
+```
+
+### 2. 给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前；你应当保留两个分区中每个节点的初始相对位置
+
+```js
+//示例:
+//输入: head = 1->4->3->2->5->2, x = 3
+//输出: 1->2->2->4->3->5
+
+```
+
+
+
+## DOM
+
+
+
+## 设计模式
+
+### 1.实现 Event emitter
+
+```js
+
+```
+
+
+
+
 
 > 引用
 

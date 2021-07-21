@@ -38,6 +38,33 @@ nohup
 
 ## Koa 的洋葱模型和中间件的原理是什么？
 
+通过next()把代码运行交接下一个中间件，等待promise完成再执行下面的内容。
+
+核心是compose方法
+
+```
+function compose(middleware) {
+  return function (context, next) {
+    let index = -1
+    return dispatch(0)
+
+    function dispatch(i) {
+      index = i
+      let fn = middleware[i]
+      if (i === middleware.length) fn = next
+      if (!fn) return Promise.resolve()
+      try {
+        return Promise.resolve(fn(context, dispatch.bind(null, i + 1)))
+      } catch (err) {
+        return Promise.reject(err)
+      }
+    }
+  }
+}
+```
+
+
+
 ## Node BFF 的职责
 
 - 统一接口转发，包含跨域和接入服务化
@@ -50,3 +77,4 @@ nohup
 2. 价值：都是在降低企业、云服务厂商大规模应用部署的资源利用的成本和应用维护难度。
 
 > [如何通过饿了么 Node.js 面试](https://github.com/ElemeFE/node-interview/tree/master/sections/zh-cn)
+

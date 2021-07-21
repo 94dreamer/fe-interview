@@ -60,9 +60,9 @@ componentWillMount/componentWillRecieveProps/componentWillUpdate
 hooks 是挂在当前 fiber 上的线性结构。
 todo
 
-## useMeno 和 useCallback 为什么能提升性能？
+## useCallback/useMeno有什么作用，为什么能提升性能？
 
-## useCallback 和 useMeno 分别有什么作用？
+
 
 ## React 的性能优化可以在那些方面？
 
@@ -74,9 +74,34 @@ todo
 
 ## Redux 的生态和原理
 
+本质是一个状态管理库，核心是store，有核心的三部分reducer/dispatch/subscrible
+
 ## Redux 的组成是什么样的？
 
-## Redux 的中间件是如何实现的？异步处理怎么做
+- store
+- reducer
+- dispatch
+- subscrible
+- getState
+
+## Redux 的中间件是如何实现的？异步处理怎么做 
+```js
+createStore(reducers,applyMiddleware(...middlewareArray))
+```
+1.传入reducers和被applyMiddleware包裹的中间件
+
+```js
+const chain = middlewares.map((middleware) => middleware(middlewareAPI))
+```
+2.调用传入的中间件函数，传入参数getState和dispatch，使中间件函数内可以获取到
+
+```js
+dispatch = compose(...chain)(store.dispatch)
+// compose内部返回
+return funcs.reduce((a, b) => (...args) => a(b(...args)))
+```
+
+3.通过compose的reduce把中间件函数合并成一个从里到外包裹的递归函数，接受dispatch作为初始参数。compose返回的是一个函数，这个函数被调用时一次执行funcs中每一个项。
 
 ## React-Redux 是如何实现的？
 
